@@ -1,4 +1,4 @@
-// TODO: Define a new trait, `Power`, that has a method `power` that raises `self`
+// Define a new trait, `Power`, that has a method `power` that raises `self`
 //  to the power of `n`.
 //  The trait definition and its implementations should be enough to get
 //  the tests to compile and pass.
@@ -13,13 +13,75 @@
 // You don't have to though: it's perfectly okay to write three separate
 // implementations manually. Venture further only if you're curious.
 
+trait Power<Exp = Self> {
+    type Output;
+
+    fn power(self, exp: Exp) -> Self::Output;
+}
+
+impl Power<u16> for u16 {
+    type Output = u16;
+
+    fn power(self, exp: u16) -> Self::Output {
+        let mut result = 1;
+
+        for _ in 1..=exp {
+           result *= self;
+        }
+
+        result
+    }
+}
+
+impl Power<u32> for u32 {
+    type Output = u32;
+
+    fn power(self, exp: u32) -> Self::Output {
+        let mut result = 1;
+
+        for _ in 1..=exp {
+           result *= self;
+        }
+
+        result
+    }
+}
+
+impl Power<&u32> for u32 {
+    type Output = u32;
+
+    fn power(self, exp: &u32) -> Self::Output {
+        let mut result = 1;
+
+        for _ in 1..=*exp {
+           result *= self;
+        }
+
+        result
+    }
+}
+
+
+// pub trait Add<RHS = Self> {
+//     type Output;
+    
+//     fn add(self, rhs: RHS) -> Self::Output;
+// }
+
+
+// impl From<u32> for WrappingU32 {
+//     fn from(value: u32) -> Self {
+//         WrappingU32 { inner: value }
+//     }
+// }
+
 #[cfg(test)]
 mod tests {
     use super::Power;
 
     #[test]
     fn test_power_u16() {
-        let x: u32 = 2_u32.power(3u16);
+        let x: u16 = 2_u16.power(3u16);
         assert_eq!(x, 8);
     }
 
