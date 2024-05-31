@@ -61,20 +61,6 @@ impl Power<&u32> for u32 {
     }
 }
 
-
-// pub trait Add<RHS = Self> {
-//     type Output;
-    
-//     fn add(self, rhs: RHS) -> Self::Output;
-// }
-
-
-// impl From<u32> for WrappingU32 {
-//     fn from(value: u32) -> Self {
-//         WrappingU32 { inner: value }
-//     }
-// }
-
 #[cfg(test)]
 mod tests {
     use super::Power;
