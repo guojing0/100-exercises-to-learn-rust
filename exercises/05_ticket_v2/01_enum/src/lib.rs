@@ -1,4 +1,4 @@
-// TODO: use `Status` as type for `Ticket::status`
+// use `Status` as type for `Ticket::status`
 //   Adjust the signature and implementation of all other methods as necessary.
 
 #[derive(Debug, PartialEq)]
@@ -7,15 +7,18 @@
 struct Ticket {
     title: String,
     description: String,
-    status: String,
+    status: Status,
 }
 
+#[derive(Debug, PartialEq, Clone, Copy)]
 enum Status {
-    // TODO: add the missing variants
+    ToDo,
+    InProgress,
+    Done
 }
 
 impl Ticket {
-    pub fn new(title: String, description: String, status: String) -> Ticket {
+    pub fn new(title: String, description: String, status: Status) -> Ticket {
         if title.is_empty() {
             panic!("Title cannot be empty");
         }
@@ -28,9 +31,15 @@ impl Ticket {
         if description.len() > 500 {
             panic!("Description cannot be longer than 500 characters");
         }
-        if status != "To-Do" && status != "In Progress" && status != "Done" {
-            panic!("Only `To-Do`, `In Progress`, and `Done` statuses are allowed");
+
+        match status {
+            Status::ToDo | Status::InProgress | Status::Done => {}
+            _ => panic!("Only `To-Do`, `In Progress`, and `Done` statuses are allowed")
         }
+
+        // if status != Stat && status != "In Progress" && status != "Done" {
+        //     panic!("Only `To-Do`, `In Progress`, and `Done` statuses are allowed");
+        // }
 
         Ticket {
             title,
@@ -47,8 +56,8 @@ impl Ticket {
         &self.description
     }
 
-    pub fn status(&self) -> &String {
-        &self.status
+    pub fn status(&self) -> Status {
+        self.status
     }
 }
 
